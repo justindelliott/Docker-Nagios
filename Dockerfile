@@ -240,6 +240,8 @@ RUN echo "ServerName ${NAGIOS_FQDN}" > /etc/apache2/conf-available/servername.co
     ln -s /etc/apache2/conf-available/servername.conf /etc/apache2/conf-enabled/servername.conf    && \
     ln -s /etc/apache2/conf-available/timezone.conf /etc/apache2/conf-enabled/timezone.conf
 
+RUN ln -s -f /usr/share/zoneinfo/America/New_York /etc/localtime
+
 EXPOSE 80
 
 VOLUME "${NAGIOS_HOME}/var" "${NAGIOS_HOME}/etc" "/var/log/apache2" "/opt/Custom-Nagios-Plugins" "/opt/nagiosgraph/var" "/opt/nagiosgraph/etc"
