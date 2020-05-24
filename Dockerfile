@@ -6,7 +6,7 @@ ENV NAGIOS_USER            nagios
 ENV NAGIOS_GROUP           nagios
 ENV NAGIOS_CMDUSER         nagios
 ENV NAGIOS_CMDGROUP        nagios
-ENV NAGIOS_FQDN            nagios.example.com
+ENV NAGIOS_FQDN            jarcade.ddns.net 
 ENV NAGIOSADMIN_USER       nagiosadmin
 ENV NAGIOSADMIN_PASS       nagios
 ENV APACHE_RUN_USER        nagios
@@ -21,6 +21,7 @@ ENV NAGIOS_BRANCH          nagios-4.4.5
 ENV NAGIOS_PLUGINS_BRANCH  release-2.2.1
 ENV NRPE_BRANCH            nrpe-3.2.1
 
+ENV MAIL_RELAY_HOST        postfix
 
 RUN echo postfix postfix/main_mailer_type string "'Internet Site'" | debconf-set-selections  && \
     echo postfix postfix/mynetworks string "127.0.0.0/8" | debconf-set-selections            && \
@@ -241,6 +242,9 @@ RUN echo "ServerName ${NAGIOS_FQDN}" > /etc/apache2/conf-available/servername.co
     ln -s /etc/apache2/conf-available/timezone.conf /etc/apache2/conf-enabled/timezone.conf
 
 RUN ln -s -f /usr/share/zoneinfo/America/New_York /etc/localtime
+
+ENV DEBIAN_FRONTEND="noninteractive"
+RUN apt-get update && apt-get install -y heirloom-mailx
 
 EXPOSE 80
 
