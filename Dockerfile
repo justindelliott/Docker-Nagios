@@ -246,6 +246,9 @@ RUN ln -s -f /usr/share/zoneinfo/America/New_York /etc/localtime
 ENV DEBIAN_FRONTEND="noninteractive"
 RUN apt-get update && apt-get install -y heirloom-mailx
 
+COPY prowl.pl /usr/local/bin/
+RUN chmod +x /usr/local/bin/prowl.pl
+
 EXPOSE 80
 
 VOLUME "${NAGIOS_HOME}/var" "${NAGIOS_HOME}/etc" "/var/log/apache2" "/opt/Custom-Nagios-Plugins" "/opt/nagiosgraph/var" "/opt/nagiosgraph/etc"
